@@ -1,4 +1,4 @@
-package com.example.bluethootstepper.threads;
+package com.example.bluetoothstepper.threads;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;

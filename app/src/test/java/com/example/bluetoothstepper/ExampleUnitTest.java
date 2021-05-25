@@ -1,4 +1,4 @@
-package com.example.bluethootstepper;
+package com.example.bluetoothstepper;
 
 import org.junit.Test;
 

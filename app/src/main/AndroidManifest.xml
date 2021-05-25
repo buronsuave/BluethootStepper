@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bluethootstepper">
+    package="com.example.bluetoothstepper">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_dave_code_vs"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_dave_code_vs"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BluethootStepper">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.BluetoothStepper">
+        <activity android:name="com.example.bluetoothstepper.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.example.bluethootstepper;
+package com.example.bluetoothstepper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,11 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.bluethootstepper.threads.BluetoothConnectionThread;
+import com.example.bluetoothstepper.threads.BluetoothConnectionThread;
 
 import java.io.IOException;
 import java.util.Set;
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity
     private static String address = null;
     private static boolean activate =  false;
 
+    private Button mAntiClockButton;
+    private Button mClockButton;
+    private Button mConnectButton;
+    private Button mDisconnectButton;
+
     private static BluetoothConnectionThread connectionThread;
 
     @Override
@@ -35,16 +42,73 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
         for(BluetoothDevice device : devices)
         {
-            if (device.getName().equals("HC-05"))
+            if (device.getName().equals("HC05"))
             {
                 address = device.getAddress();
             }
         }
 
+        Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
 
+        mConnectButton = findViewById(R.id.connectButton);
+        mDisconnectButton = findViewById(R.id.disconnectButton);
+        mClockButton = findViewById(R.id.rightButton);
+        mAntiClockButton = findViewById(R.id.leftButton);
+
+        mConnectButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(MainActivity.this, "Connect click", Toast.LENGTH_LONG).show();
+                activate = true;
+                onResume();
+            }
+        });
+
+        mAntiClockButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(MainActivity.this, "Anti clockwise click", Toast.LENGTH_LONG).show();
+                connectionThread.write("0");
+            }
+        });
+
+        mClockButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(MainActivity.this, "Clockwise click", Toast.LENGTH_LONG).show();
+                connectionThread.write("1");
+            }
+        });
+
+        mDisconnectButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(MainActivity.this, "Disconnect click", Toast.LENGTH_LONG).show();
+
+                try
+                {
+                    bluetoothSocket.close();
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        checkBluetooth();
     }
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException
